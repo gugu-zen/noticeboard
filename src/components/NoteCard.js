@@ -15,6 +15,7 @@ import { blue, green, orange, pink, yellow } from '@material-ui/core/colors';
 const useStyles = makeStyles({
     root: {
         borderRadius: 10,
+        marginBottom: 30
     },
     avatar: {
         backgroundColor: (note) => {

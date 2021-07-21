@@ -18,6 +18,7 @@ code {
   display: flex;
   margin-left: -30px;
   width: auto;
+  padding-bottom: 30px;
 }
 
 .my-masonry-grid_column {
