@@ -7,7 +7,7 @@ import { List } from '@material-ui/core';
 import { ListItem } from '@material-ui/core';
 import { ListItemIcon } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
-import {AddOutlined, HomeOutlined, SearchOutlined, SubjectOutlined } from '@material-ui/icons';
+import {AddOutlined, HomeOutlined, QueryBuilderOutlined, SearchOutlined } from '@material-ui/icons';
 import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 
@@ -30,15 +30,12 @@ const useStyles = makeStyles((theme) => {
         root: {
             display: 'flex'
         },
-        active: {
-            background: '#f4f4f4'
-        },
         title: {
             padding: theme.spacing(3)
         },
         appbar: { 
-            background: "fefefe",
-            width: "calc(100% - ${ drawerWidth}px)"
+            background: "#fefefe",
+            width: "calc(100% - 240)"
         },
         toolbar: theme.mixins.toolbar
     }
@@ -53,7 +50,7 @@ function Layout({ children }){
         {
             text: " Search",
             icon: <SearchOutlined color="secondary" />,
-            path: "/search"
+            path: "/"
         },
         {
             text: " Home",
@@ -61,8 +58,8 @@ function Layout({ children }){
             path: "/"
         },
         {
-            text: " More notices",
-            icon: <SubjectOutlined color="secondary" />,
+            text: " recent notices",
+            icon: <QueryBuilderOutlined color="secondary" />,
             path: "/recent"
         },
         {
@@ -82,7 +79,7 @@ function Layout({ children }){
             elevation={0}>
                 <Toolbar>
                     <Typography>
-                        { Date().toString}
+                      UNIMA
                     </Typography>
                 </Toolbar>
             </AppBar>

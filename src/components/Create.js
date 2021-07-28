@@ -9,6 +9,9 @@ import { Radio } from '@material-ui/core';
 import { RadioGroup } from '@material-ui/core';
 import { FormControl } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoIcon from '@material-ui/icons/Photo';
+import { AttachFileOutlined } from '@material-ui/icons';
 
 
 const useStyles = makeStyles({
@@ -16,7 +19,10 @@ const useStyles = makeStyles({
         marginTop: 20,
         marginBottom: 20,
         display: 'block'
-    }
+    },
+    input: {
+        display: 'hidden',
+      },
 })
 
     function Create() {
@@ -24,6 +30,7 @@ const useStyles = makeStyles({
     const history = useHistory()
     const [title, setTitle] = useState('')
     const [details, setDetails] = useState('')
+    const [file, setFile] = useState('')
     const [titleError, setTitleError] = useState(false)
     const [detailsError, setDetailsError] = useState(false)
     const [category, setCategory] = useState('')
@@ -43,7 +50,7 @@ const useStyles = makeStyles({
             fetch('http://localhost:8000/notes', {
                 method: "POST",
                 headers: {"Content-type": "application/json"},
-                body: JSON.stringify({title, details, category})
+                body: JSON.stringify({title, category, details, file})
             }).then(() => history.push('/'))
         }
 
@@ -52,7 +59,7 @@ const useStyles = makeStyles({
     return(
         <Container>
             <Typography
-            variant="h6"
+            variant="h5"
             color="textSecondary"
             component="h2"
             gutterBottom
@@ -83,6 +90,48 @@ const useStyles = makeStyles({
                 required
                 error={detailsError} 
                 />
+                
+                <div onSubmit={handleSubmit}> 
+                    <input
+                        onChange={(e) => setFile(e.target.value)}
+                        accept="document/*"
+                        className={classes.input}
+                        id="raised-button-file"
+                        multiple
+                        type="file"
+                        hidden
+                    />
+                    <label 
+                    htmlFor="raised-button-file"
+                    >
+                        <IconButton
+                        variant="raised" 
+                        color="secondary" 
+                        component="span"
+                        >
+                        <AttachFileOutlined />
+                        </IconButton>
+                    </label>
+                    <input 
+                    onChange={(e) => setFile(e.target.value)}
+                    accept="image/*" 
+                    className={classes.input} 
+                    id="icon-button-file" 
+                    type="file" 
+                    hidden
+                    />
+                    <label 
+                    htmlFor="icon-button-file"
+                    >
+                        <IconButton
+                        color="secondary" 
+                        aria-label="upload picture" 
+                        component="span"
+                        >
+                        <PhotoIcon />
+                        </IconButton>
+                    </label>
+                </div>
 
                 <FormControl 
                 className={classes.field}
@@ -93,9 +142,9 @@ const useStyles = makeStyles({
                     onChange={(e) => setCategory(e.target.value)}
                     >
                         <FormControlLabel value="Popular" control={<Radio />} label="Popular" />
-                        <FormControlLabel value="Notices" control={<Radio />} label="Notices" />
-                        <FormControlLabel value="Events" control={<Radio />} label="Events" />
-                        <FormControlLabel value="Adverts" control={<Radio />} label="Adverts" />
+                        <FormControlLabel value="Notice" control={<Radio />} label="Notice" />
+                        <FormControlLabel value="Event" control={<Radio />} label="Event" />
+                        <FormControlLabel value="Advertisement" control={<Radio />} label="Advertisement" />
                     </RadioGroup>
                 </FormControl>
 

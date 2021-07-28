@@ -4,19 +4,15 @@
       "title": "useState",
       "details": "useState is a Hook that allows you to have state variables in functional components. You pass the initial state to this function and it returns a variable with the current state value (not necessarily the initial state) and another function to update this value.",
       "category": "Popular",
+      "file": " ",
       "id": 1
     },
     {
       "title": "useEffect",
       "details": "useEffect is the hook that manages the side-effects in functional components. callback argument is a function to put the side-effect logic. dependencies is a list of dependencies of your side-effect: being props or state values.",
       "category": "Popular",
+      "file": " ",
       "id": 2
-    },
-    {
-      "title": "useHistory",
-      "details": "useHistory does a great job of showcasing React Hooks by separating access to the react-router history object into a cross-cutting concern and replaces the previous cumbersome access via higher-order components or render-props that are now a thing of the past.",
-      "category": "Popular",
-      "id": 3
     }
   ]
 }

@@ -3,12 +3,12 @@ import React from 'react';
 import './App.css';
 import Notes from './components/Notes';
 import Create from './components/Create';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import Layout from './components/Layout';
 import Category from './components/Category'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   pallete:{
     primary: {
       main: '#fefefe'
@@ -32,6 +32,7 @@ function App() {
          <Route exact path="/category">
            <Category />
          </Route>
+
         </Switch>
         </Layout>
       </Router>

@@ -10,14 +10,17 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 const useStyles = makeStyles()
 
-function Category() {
+ function Category() {
 
     const classes = useStyles()
     const [category, setCategory] = useState('')
+
+    const handleSubmit = (e) => {
+        e.preventDefault() }
     
     return(
         <div>
-            <FormControl className={classes.field}>
+            <FormControl className={classes.field} onSubmit={handleSubmit}>
                     <FormLabel>Category</FormLabel>
                     <RadioGroup value={category} onChange={(e) => setCategory(e.target.value)}>
                         <FormControlLabel value="Popular" control={<Radio />} label="Popular" />
