@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Card from '@material-ui/core/Card';
-import { CardMedia, Divider } from '@material-ui/core';
+import { CardMedia } from '@material-ui/core';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import { ThumbUpOutlined } from '@material-ui/icons';
+import { Delete, Edit, ThumbUpOutlined } from '@material-ui/icons';
 import Comment from '@material-ui/icons/Comment';
 import { IconButton, Typography } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
@@ -90,11 +90,10 @@ function NoteCard({note, handleDelete}) {
                         onClose={handleClose}
                         >
                             <MenuItem onClick={handleClose}>
-                               Edit
+                               <Edit />Edit
                             </MenuItem>
-                            <Divider /> 
                             <MenuItem onClick={() => handleDelete(note.id)}>
-                                Delete
+                                <Delete />Delete
                             </MenuItem>
                         </Menu>
                     </div>               

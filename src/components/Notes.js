@@ -17,12 +17,6 @@ export default function Notes() {
         await fetch('http://localhost:8000/notes/'+ id, {
             method: 'DELETE'
         })
-    
-    const handle = async (id) => {
-        await fetch('http://localhost:8000/notes/'+ id, {
-            method: ''
-        })
-
         const newNotes =notes.filter(note => note.id !== id)
         setNotes(newNotes)
     }
