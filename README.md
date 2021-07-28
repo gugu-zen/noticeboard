@@ -4,4 +4,4 @@
 #One more thing, i have to fix flexbox layout to display the cards in rows not just one column. Or you can help me with that.
 #Set up a json server by running this command "npm install -g json-server" in your git bash.
 #Then start json server by running this command "json-server --watch db.json --port 8000"
-#Next, start react to and test some functions.
+#Next, start react to test some functions.
