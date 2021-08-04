@@ -8,7 +8,17 @@ import { FormLabel } from '@material-ui/core';
 import { FormControlLabel } from '@material-ui/core';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
-const useStyles = makeStyles()
+const useStyles = makeStyles({
+    form: {
+    },
+    btn: {
+        marginTop: 20
+    },
+    text: {
+        marginBottom: 10,
+        fontSize: 20
+    }
+})
 
  function Category() {
 
@@ -19,17 +29,22 @@ const useStyles = makeStyles()
         e.preventDefault() }
     
     return(
-        <div>
+        <div className={classes.form}>
             <FormControl className={classes.field} onSubmit={handleSubmit}>
-                    <FormLabel>Category</FormLabel>
-                    <RadioGroup value={category} onChange={(e) => setCategory(e.target.value)}>
+                    <FormLabel className={classes.text}>
+                        Category
+                    </FormLabel>
+                    <RadioGroup 
+                    value={category} 
+                    onChange={(e) => setCategory(e.target.value)}>
                         <FormControlLabel value="Popular" control={<Radio />} label="Popular" />
                         <FormControlLabel value="Notices" control={<Radio />} label="Notices" />
                         <FormControlLabel value="Events" control={<Radio />} label="Events" />
                         <FormControlLabel value="Adverts" control={<Radio />} label="Adverts" />
                     </RadioGroup>
                 </FormControl>
-
+                
+                <div className={classes.btn}>
                 <Button 
                 type="submit"
                 color="secondary"
@@ -38,8 +53,8 @@ const useStyles = makeStyles()
                 endIcon={<KeyboardArrowRightIcon />}
                 >
                     Continue
-                </Button>
-
+                </Button> 
+                </div>
         </div>
     )
 }

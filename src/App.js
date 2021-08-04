@@ -7,11 +7,12 @@ import { createTheme, ThemeProvider } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
 import Layout from './components/Layout';
 import Category from './components/Category'
+import Edit from './components/Edit'
 
 const theme = createTheme({
   pallete:{
     primary: {
-      main: '#fefefe'
+      main: '#2196f3'
     },
     secondary: purple
   }
@@ -31,6 +32,9 @@ function App() {
          </Route>
          <Route exact path="/category">
            <Category />
+         </Route>
+         <Route exact path="/edit">
+           <Edit />
          </Route>
 
         </Switch>

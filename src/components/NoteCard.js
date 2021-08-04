@@ -20,7 +20,7 @@ import { blue, green, orange, pink, yellow } from '@material-ui/core/colors';
 const useStyles = makeStyles({
     root: {
         borderRadius: 10,
-        marginBottom: 30
+        marginBottom: 30,
     },
     media: {
         height: 0,
@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     }
 })
 
-function NoteCard({note, handleDelete}) {
+function NoteCard({note, handleChange, handleDelete}) {
 
     const classes = useStyles()
 
@@ -89,7 +89,7 @@ function NoteCard({note, handleDelete}) {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>
+                            <MenuItem onClick={() => handleChange(note.id)}>
                                <Edit />Edit
                             </MenuItem>
                             <MenuItem onClick={() => handleDelete(note.id)}>

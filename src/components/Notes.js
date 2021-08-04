@@ -20,6 +20,14 @@ export default function Notes() {
         const newNotes =notes.filter(note => note.id !== id)
         setNotes(newNotes)
     }
+    const handleChange = async (id) => {
+        await fetch('http://localhost:8000/notes/'+ id, {
+            method: 'PUT'
+        })
+        const newNotes =notes.filter(note => note.id !== id)
+        setNotes(newNotes)
+    }
+
 
     const breakpoints = {
         default: 3,
@@ -36,7 +44,7 @@ export default function Notes() {
             >
             {notes.map(note => (
                 <div item key={note.id} >
-                   <NoteCard note={note} handleDelete={handleDelete} />
+                   <NoteCard note={note} handleDelete={handleDelete} handleChange={handleChange} />
                 </div>
                 ))}
             </Masonry>

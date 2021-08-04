@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { FormControlLabel, FormLabel, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { TextField } from '@material-ui/core';
-import { Radio } from '@material-ui/core';
-import { RadioGroup } from '@material-ui/core';
-import { FormControl } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoIcon from '@material-ui/icons/Photo';
-import { AttachFileOutlined, Send } from '@material-ui/icons';
+import { AttachFileOutlined } from '@material-ui/icons';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 
 const useStyles = makeStyles({
@@ -19,15 +17,12 @@ const useStyles = makeStyles({
         marginBottom: 20,
         display: 'block'
     },
-    asterisk: {
-        display: 'none'
-    },
     input: {
         display: 'hidden',
       },
 })
 
-    function Create() {
+    function Edit() {
     const classes = useStyles()
     const history = useHistory()
     const [title, setTitle] = useState('')
@@ -35,8 +30,7 @@ const useStyles = makeStyles({
     const [file, setFile] = useState('')
     const [titleError, setTitleError] = useState(false)
     const [detailsError, setDetailsError] = useState(false)
-    const [category, setCategory] = useState('')
-
+  
     const handleSubmit = (e) => {
         e.preventDefault()
         setTitleError(false)
@@ -50,9 +44,9 @@ const useStyles = makeStyles({
         }
         if (title && details) {
             fetch('http://localhost:8000/notes', {
-                method: "POST",
+                method: "PUT",
                 headers: {"Content-type": "application/json"},
-                body: JSON.stringify({title, category, details, file})
+                body: JSON.stringify({title, details, file})
             }).then(() => history.push('/'))
         }
 
@@ -66,7 +60,7 @@ const useStyles = makeStyles({
             component="h2"
             gutterBottom
             >
-                Create a New Notice.
+                Edit Notice.
             </Typography>
 
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -78,12 +72,8 @@ const useStyles = makeStyles({
                 color="secondary"
                 fullWidth
                 required
-                InputLabelProps={{
-                    FormLabelClasses: {
-                      asterisk: classes.asterisk
-                    }
-                  }}
                 error={titleError} 
+                value=""
                 />
                  <TextField
                  onChange={(e) => setDetails(e.target.value)}
@@ -94,19 +84,15 @@ const useStyles = makeStyles({
                 multiline
                 rows={4}
                 fullWidth
-                required 
-                InputLabelProps={{
-                    FormLabelClasses: {
-                      asterisk: classes.asterisk
-                    }
-                  }}
+                required
                 error={detailsError} 
+                value=""
                 />
                 
                 <div onSubmit={handleSubmit}> 
                     <input
                         onChange={(e) => setFile(e.target.value)}
-                        accept="attach/*"
+                        accept="document/*"
                         className={classes.input}
                         id="raised-button-file"
                         multiple
@@ -145,26 +131,11 @@ const useStyles = makeStyles({
                     </label>
                 </div>
 
-                <FormControl 
-                className={classes.field}
-                >
-                    <FormLabel>Category</FormLabel>
-                    <RadioGroup 
-                    value={category} 
-                    onChange={(e) => setCategory(e.target.value)}
-                    >
-                        <FormControlLabel value="Popular" control={<Radio />} label="Popular" />
-                        <FormControlLabel value="Notice" control={<Radio />} label="Notice" />
-                        <FormControlLabel value="Event" control={<Radio />} label="Event" />
-                        <FormControlLabel value="Advertisement" control={<Radio />} label="Advertisement" />
-                    </RadioGroup>
-                </FormControl>
-
                 <Button 
                 type="submit"
                 color="secondary"
                 variant="contained"
-                endIcon={<Send />}
+                endIcon={<KeyboardArrowRightIcon />}
                 >
                     Update
                 </Button>
@@ -175,4 +146,4 @@ const useStyles = makeStyles({
     )
 };
 
-export default Create;
+export default Edit;

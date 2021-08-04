@@ -7,7 +7,7 @@ import { List } from '@material-ui/core';
 import { ListItem } from '@material-ui/core';
 import { ListItemIcon } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
-import {AddOutlined, HomeOutlined, QueryBuilderOutlined, SearchOutlined } from '@material-ui/icons';
+import {AddOutlined, HomeOutlined, SearchOutlined, QueryBuilderOutlined } from '@material-ui/icons';
 import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 
@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => {
             padding: theme.spacing(3)
         },
         appbar: { 
-            background: "#fefefe",
-            width: "calc(100% - 240)"
+            background: "fefefe",
+            width: "calc(100% - ${ drawerWidth}px)"
         },
         toolbar: theme.mixins.toolbar
     }
@@ -47,26 +47,26 @@ function Layout({ children }){
     const location = useLocation()
 
     const menuItems = [
-        {
-            text: " Search",
-            icon: <SearchOutlined color="secondary" />,
-            path: "/"
-        },
-        {
-            text: " Home",
-            icon: <HomeOutlined color="secondary" />,
-            path: "/"
-        },
-        {
-            text: " recent notices",
-            icon: <QueryBuilderOutlined color="secondary" />,
-            path: "/recent"
-        },
-        {
-            text: " Create new notice",
-            icon: <AddOutlined color="secondary" />,
-            path: "/create"
-        }
+      {
+        text: " Home",
+        icon: <HomeOutlined color="secondary" />,
+        path: "/"
+      },
+      {
+          text: " Search",
+          icon: <SearchOutlined color="secondary" />,
+          path: "/"
+      },
+      {
+          text: " recent notices",
+          icon: <QueryBuilderOutlined color="secondary" />,
+          path: "/recent"
+      },
+      {
+          text: " Create new notice",
+          icon: <AddOutlined color="secondary" />,
+          path: "/create"
+      }
     ]
 
     return(
@@ -79,7 +79,7 @@ function Layout({ children }){
             elevation={0}>
                 <Toolbar>
                     <Typography>
-                      UNIMA
+                        { Date().toString}
                     </Typography>
                 </Toolbar>
             </AppBar>
