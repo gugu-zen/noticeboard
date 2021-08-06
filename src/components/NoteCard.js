@@ -21,6 +21,7 @@ const useStyles = makeStyles({
     root: {
         borderRadius: 10,
         marginBottom: 30,
+        width: '200%',
     },
     media: {
         height: 0,
@@ -41,7 +42,7 @@ const useStyles = makeStyles({
             }
             return blue[500]
         }
-    }
+    },
 })
 
 function NoteCard({note, handleChange, handleDelete}) {
@@ -91,7 +92,7 @@ function NoteCard({note, handleChange, handleDelete}) {
                         >
                             <MenuItem onClick={() => handleChange(note.id)}>
                                <Edit />Edit
-                            </MenuItem>
+                            </MenuItem>                         
                             <MenuItem onClick={() => handleDelete(note.id)}>
                                 <Delete />Delete
                             </MenuItem>
@@ -100,7 +101,8 @@ function NoteCard({note, handleChange, handleDelete}) {
 
                 }
                 title={note.title}
-                subheader={note.category}
+                subheader="August 4, 2021"
+                
                 />
 
                 <CardContent>
@@ -109,11 +111,13 @@ function NoteCard({note, handleChange, handleDelete}) {
                     </Typography>
                 </CardContent>
                 <CardMedia
+                    subheader={note.category}
                     className={classes.media}
                     input={note.file}
                 />
 
-                <CardActions disableSpacing>
+                <CardActions className={classes.spacing}
+                 disableSpacing >
                 <IconButton aria-label="like">
                 <ThumbUpOutlined />
                 </IconButton>

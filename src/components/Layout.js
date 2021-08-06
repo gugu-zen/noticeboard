@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
+import { Divider, makeStyles } from '@material-ui/core';
 import { Drawer } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { List } from '@material-ui/core';
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => {
         },
         appbar: { 
             background: "fefefe",
-            width: "calc(100% - ${ drawerWidth}px)"
+            width: "calc(100% - 240)"
         },
         toolbar: theme.mixins.toolbar
     }
@@ -58,7 +58,7 @@ function Layout({ children }){
           path: "/"
       },
       {
-          text: " recent notices",
+          text: " Recent notices",
           icon: <QueryBuilderOutlined color="secondary" />,
           path: "/recent"
       },
@@ -99,6 +99,7 @@ function Layout({ children }){
                         UNIMA
                     </Typography>
                 </div>
+                <Divider />
 
                 {/** list items */}
                 <List>
@@ -112,6 +113,7 @@ function Layout({ children }){
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={item.text} />
                         </ListItem>)}
+                        
                 </List>
 
             </Drawer>

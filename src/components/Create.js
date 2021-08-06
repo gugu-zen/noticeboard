@@ -17,14 +17,25 @@ const useStyles = makeStyles({
     field: {
         marginTop: 20,
         marginBottom: 20,
-        display: 'block'
+        display: 'block',
+        color: "#282A3A",
     },
     asterisk: {
         display: 'none'
     },
     input: {
         display: 'hidden',
-      },
+    },
+    text: {
+    fontSize: 20
+    },
+    position: {
+        marginTop: 25
+    },
+    btn: {
+        marginTop: 10,
+        marginLeft:30
+    }
 })
 
     function Create() {
@@ -106,13 +117,15 @@ const useStyles = makeStyles({
                 <div onSubmit={handleSubmit}> 
                     <input
                         onChange={(e) => setFile(e.target.value)}
-                        accept="attach/*"
+                        name="upload"
+                        accept="application/msword, application/pdf, application/vnd.ms-excel"
                         className={classes.input}
                         id="raised-button-file"
                         multiple
                         type="file"
                         hidden
                     />
+                    
                     <label 
                     htmlFor="raised-button-file"
                     >
@@ -132,6 +145,7 @@ const useStyles = makeStyles({
                     type="file" 
                     hidden
                     />
+                    
                     <label 
                     htmlFor="icon-button-file"
                     >
@@ -148,19 +162,22 @@ const useStyles = makeStyles({
                 <FormControl 
                 className={classes.field}
                 >
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel className={classes.text} color="">Category</FormLabel>
                     <RadioGroup 
+                    className={classes.position}
+                    row aria-label="position"
                     value={category} 
                     onChange={(e) => setCategory(e.target.value)}
                     >
-                        <FormControlLabel value="Popular" control={<Radio />} label="Popular" />
-                        <FormControlLabel value="Notice" control={<Radio />} label="Notice" />
-                        <FormControlLabel value="Event" control={<Radio />} label="Event" />
-                        <FormControlLabel value="Advertisement" control={<Radio />} label="Advertisement" />
+                        <FormControlLabel value="Popular" control={<Radio />} label="Popular" labelPlacement="start" />
+                        <FormControlLabel value="Notice" control={<Radio />} label="Notice" labelPlacement="top" />
+                        <FormControlLabel value="Event" control={<Radio />} label="Event" labelPlacement="bottom" />
+                        <FormControlLabel value="Advertisement" control={<Radio />} label="Advertisement" labelPlacement="end" />
                     </RadioGroup>
                 </FormControl>
 
                 <Button 
+                className={classes.btn}
                 type="submit"
                 color="secondary"
                 variant="contained"
