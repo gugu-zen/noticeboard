@@ -4,13 +4,15 @@ import { CardMedia } from '@material-ui/core';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import { Delete, Edit, ThumbUpOutlined } from '@material-ui/icons';
+import { Delete, Edit, ThumbUpOutlined, ThumbDownOutlined} from '@material-ui/icons';
+import { Divider } from '@material-ui/core';
 import Comment from '@material-ui/icons/Comment';
 import { IconButton, Typography } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';  
 import MenuItem from '@material-ui/core/MenuItem'; 
+
 
 
 import { makeStyles } from '@material-ui/core';
@@ -22,6 +24,9 @@ const useStyles = makeStyles({
         borderRadius: 10,
         marginBottom: 30,
         width: '200%',
+    },
+    spacing:{
+       marginRight : 30
     },
     media: {
         height: 0,
@@ -101,25 +106,31 @@ function NoteCard({note, handleChange, handleDelete}) {
 
                 }
                 title={note.title}
-                subheader="August 4, 2021"
+                subheader={note.category}
                 
                 />
 
                 <CardContent>
+                <Typography variant="body2" >
+                        {note.title}
+                    </Typography>
+                    <br />
                     <Typography variant="body2" color="textSecondary">
                         {note.details}
                     </Typography>
                 </CardContent>
                 <CardMedia
-                    subheader={note.category}
                     className={classes.media}
                     input={note.file}
                 />
-
+                <Divider />
                 <CardActions className={classes.spacing}
-                 disableSpacing >
-                <IconButton aria-label="like">
-                <ThumbUpOutlined />
+                 >
+                     <IconButton aria-label="comment">
+                <ThumbUpOutlined /> 
+                </IconButton>
+                <IconButton aria-label="comment">
+                 <ThumbDownOutlined />
                 </IconButton>
                 <IconButton aria-label="comment">
                 <Comment />

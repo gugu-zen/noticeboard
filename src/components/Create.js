@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FormControlLabel, FormLabel, Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Container } from '@material-ui/core';
+import { Card } from '@material-ui/core';
+import { CardContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { TextField } from '@material-ui/core';
 import { Radio } from '@material-ui/core';
@@ -14,6 +16,10 @@ import { AttachFileOutlined, Send } from '@material-ui/icons';
 
 
 const useStyles = makeStyles({
+    root: {
+        maxWidth: 'lg',
+        backgroundColor: "fefefe",
+    },
     field: {
         marginTop: 20,
         marginBottom: 20,
@@ -34,7 +40,7 @@ const useStyles = makeStyles({
     },
     btn: {
         marginTop: 10,
-        marginLeft:30
+        marginLeft:30,
     }
 })
 
@@ -47,6 +53,8 @@ const useStyles = makeStyles({
     const [titleError, setTitleError] = useState(false)
     const [detailsError, setDetailsError] = useState(false)
     const [category, setCategory] = useState('')
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -64,14 +72,16 @@ const useStyles = makeStyles({
                 method: "POST",
                 headers: {"Content-type": "application/json"},
                 body: JSON.stringify({title, category, details, file})
-            }).then(() => history.push('/'))
+            }).then(() => history.push('/recent'))
         }
 
     }
 
     return(
-        <Container>
-            <Typography
+        <Container maxWidth="md">
+            <Card className={classes.root}>
+                <CardContent>
+                <Typography
             variant="h5"
             color="textSecondary"
             component="h2"
@@ -80,12 +90,29 @@ const useStyles = makeStyles({
                 Create a New Notice.
             </Typography>
 
+            <FormControl 
+            className={classes.field}
+            >
+                <FormLabel className={classes.text}>Category</FormLabel>
+                <RadioGroup 
+                className={classes.position}
+                row aria-label="position"
+                value={category} 
+                onChange={(e) => setCategory(e.target.value)}
+                >
+                    <FormControlLabel value="Popular" control={<Radio />} label="Popular"  />
+                    <FormControlLabel value="Notice" control={<Radio />} label="Notice"  />
+                    <FormControlLabel value="Event" control={<Radio />} label="Event"  />
+                    <FormControlLabel value="Advertisement" control={<Radio />} label="Advertisement"  />
+                </RadioGroup>
+            </FormControl>
+
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField
                 onChange={(e) => setTitle(e.target.value)}
                 className={classes.field}
                 label="Add title"
-                variant="standard"
+                variant="outlined"
                 color="secondary"
                 fullWidth
                 required
@@ -100,7 +127,7 @@ const useStyles = makeStyles({
                  onChange={(e) => setDetails(e.target.value)}
                 className={classes.field}
                 label="Add details"
-                variant="standard"
+                variant="outlined"
                 color="secondary"
                 multiline
                 rows={4}
@@ -137,6 +164,7 @@ const useStyles = makeStyles({
                         <AttachFileOutlined />
                         </IconButton>
                     </label>
+                    
                     <input 
                     onChange={(e) => setFile(e.target.value)}
                     accept="image/*" 
@@ -159,23 +187,6 @@ const useStyles = makeStyles({
                     </label>
                 </div>
 
-                <FormControl 
-                className={classes.field}
-                >
-                    <FormLabel className={classes.text} color="">Category</FormLabel>
-                    <RadioGroup 
-                    className={classes.position}
-                    row aria-label="position"
-                    value={category} 
-                    onChange={(e) => setCategory(e.target.value)}
-                    >
-                        <FormControlLabel value="Popular" control={<Radio />} label="Popular" labelPlacement="start" />
-                        <FormControlLabel value="Notice" control={<Radio />} label="Notice" labelPlacement="top" />
-                        <FormControlLabel value="Event" control={<Radio />} label="Event" labelPlacement="bottom" />
-                        <FormControlLabel value="Advertisement" control={<Radio />} label="Advertisement" labelPlacement="end" />
-                    </RadioGroup>
-                </FormControl>
-
                 <Button 
                 className={classes.btn}
                 type="submit"
@@ -188,6 +199,8 @@ const useStyles = makeStyles({
 
             </form>
 
+                </CardContent>
+            </Card>
         </Container>
     )
 };

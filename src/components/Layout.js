@@ -10,6 +10,7 @@ import { ListItemText } from '@material-ui/core';
 import {AddOutlined, HomeOutlined, SearchOutlined, QueryBuilderOutlined } from '@material-ui/icons';
 import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
+import {Link,NavLink} from 'react-router-dom';
 
 const drawerWidth = 240
 
@@ -34,8 +35,10 @@ const useStyles = makeStyles((theme) => {
             padding: theme.spacing(3)
         },
         appbar: { 
-            background: "fefefe",
-            width: "calc(100% - 240)"
+            width: `calc(100% - ${drawerWidth}px)`,
+           backgroundColor: "#3c3c3c", 
+           color: "white", 
+           boxShadow: "0px 0px 0px 0px"
         },
         toolbar: theme.mixins.toolbar
     }
@@ -55,7 +58,7 @@ function Layout({ children }){
       {
           text: " Search",
           icon: <SearchOutlined color="secondary" />,
-          path: "/"
+          path: "/search"
       },
       {
           text: " Recent notices",
@@ -74,12 +77,12 @@ function Layout({ children }){
 
             {/** App bar */}
 
-            <AppBar 
+            <AppBar
             className={classes.appbar}
-            elevation={0}>
+            >
                 <Toolbar>
-                    <Typography>
-                        { Date().toString}
+                    <Typography style={{ textSizeAdjust : "40px"}}>
+                     UNIMA notice Board
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -96,7 +99,9 @@ function Layout({ children }){
             >
                 <div>
                     <Typography variant="h5" className={classes.title}>
-                        UNIMA
+                      
+                          <img height="60px" src="https://www.cc.ac.mw/images/UnimaLogo.png" alt="unimalogo"/>
+        
                     </Typography>
                 </div>
                 <Divider />
