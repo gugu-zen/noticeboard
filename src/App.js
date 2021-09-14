@@ -1,45 +1,53 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import './App.css';
-import Notes from './components/Notes';
+import Home from './components/Home';
+import Recent from './components/page/Recent';
 import Create from './components/Create';
 import Layout from './components/Layout';
-import Edit from './components/Edit';
 import {createTheme, ThemeProvider} from '@material-ui/core';
-
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#fefefe'
+      main: '#cd8500'
     },
     secondary: {
-      main: '#009acd'
+      main: '#0540F2' 
+    },
+    typography: {
+      fontFamily: "Ubuntu",
+      fontWeightLight: 400,
+      fontWeightRegular: 500,
+      fontWeightMedium: 600,
+      fontWeightBold: 700, 
     }
   }
 })
 
-
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    
+    <ThemeProvider theme={theme}> 
       <Router>
         <Layout>
-        <Switch>
-          <Route exact path="/recent">
-            <Notes />
-          </Route>
-          <Route exact path="/create">
-            <Create />
-          </Route>
-          <Route exact path="/edit">
-            <Edit />
-          </Route>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/recent">
+              <Recent />
+            </Route>
+            <Route exact path="/create">
+              <Create />
+            </Route>         
+          </Switch>
           
-        </Switch>
-        </Layout>
+          </Layout>
       </Router>
+     
     </ThemeProvider>
+    
   );
 }
 

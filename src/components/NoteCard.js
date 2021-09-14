@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import moment from 'moment';
 import Card from '@material-ui/core/Card';
-import { CardMedia } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import { Delete, Edit, ThumbUpOutlined, ThumbDownOutlined} from '@material-ui/icons';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
+import Dialog from '@material-ui/core/Dialog';
+import Collapse from '@material-ui/core/Collapse';
+import { Delete } from '@material-ui/icons';
 import { Divider } from '@material-ui/core';
 import Comment from '@material-ui/icons/Comment';
 import { IconButton, Typography } from '@material-ui/core';
@@ -12,58 +19,95 @@ import { Avatar } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';  
 import MenuItem from '@material-ui/core/MenuItem'; 
-
-
-
 import { makeStyles } from '@material-ui/core';
 import { blue, green, orange, pink, yellow } from '@material-ui/core/colors';
+import socialMediaAuth from '../auth';
+import { googleProvider } from '../authmethod';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Box from '@material-ui/core/Box';
+import EditingDialogue from './EditingDialogue';
+import ShareComments from './page/ShareComments';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles( (theme) =>({ 
     root: {
         borderRadius: 10,
         marginBottom: 30,
         width: '200%',
     },
-    spacing:{
-       marginRight : 30
-    },
     media: {
-        height: 0,
+        maxWidth: '100%',
+        maxHeight: '50%',
+        height: 'auto',
+        width: 'auto'
     },
-    avatar: {
-        backgroundColor: (note) => {
-            if (note.category === 'Popular') {
-                return yellow[700]
-            }
+    menu: {
+        marginLeft: 40,
+        width: 300,
+        height: 300
+    },
+    categoryColor: {
+        color: (note) => {
             if (note.category === 'Notices') {
                 return green[500]
             }
-            if (note.category === 'Events') {
+            else if (note.category === 'Events') {
                 return pink[500]
             }
-            if (note.category === 'Adverts') {
+            else if (note.category === 'Articles') {
+                return yellow[700]
+            }
+            else if (note.category === 'Advertisements') {
                 return orange[500]
             }
-            return blue[500]
+            else {
+                return blue[500]
+            }
         }
     },
-})
+    comment: {
+        maxWidth: "90%",
+        marginLeft: 25,
+        marginBottom: 20
+    },
+}));
 
-function NoteCard({note, handleChange, handleDelete}) {
+export default function NoteCard({note, handleChange, handleDelete}) {
 
-    const classes = useStyles()
+    const classes = useStyles();
+    const [expanded, setExpanded] = React.useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
-   const [anchorEl, open] = useState(null);
-   const handleClick = event => {
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
+
+    const [anchorEl, open] = useState(null);
+    const handleClick = event => {
        open(event.currentTarget);
-   };
+    };
 
-   const handleClose = () => {
+    const handleClose = () => {
        open(null);
-   };
+    };
 
-    
+    const onShowConfirm = () => {
+        if (user?.email === note.user?.email)
+            setDialogOpen(true);
+
+        else alert("You Can Delete your own posts only!")
+    };
+    const onCancel = () => {
+        setDialogOpen();
+    };
+
+    const [user, setUser] = useState(null)
+    console.warn(user)
+
+    socialMediaAuth(googleProvider, false)
+        .then((res) => setUser(res))
+        .catch((err) => setUser(err))
+
 
     return (
         <div>
@@ -71,13 +115,7 @@ function NoteCard({note, handleChange, handleDelete}) {
                 <CardHeader
                 avatar={
                     <div>
-                        <Avatar 
-                        src= '' 
-                        alt= ''
-                        style={{width: '40px', 
-                        marginRight: 10, display: 
-                        'inline-block', verticalAlign: 'middle'}}
-                        />
+                        {note.user?.photoURL ? <Avatar src={note.user.photoURL}/>: <AccountCircle  />}
                         </div>
                 }
                 action={
@@ -94,51 +132,94 @@ function NoteCard({note, handleChange, handleDelete}) {
                         keepMounted
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
+                        className={classes.menu}
                         >
-                            <MenuItem onClick={() => handleChange(note.id)}>
-                               <Edit />Edit
-                            </MenuItem>                         
-                            <MenuItem onClick={() => handleDelete(note.id)}>
+                             <MenuItem>
+                               <EditingDialogue note={note} user={user}/>
+                            </MenuItem>        
+              
+                            <MenuItem onClick={onShowConfirm}>
                                 <Delete />Delete
+                                <Dialog
+                                    disableBackdropClick
+                                    disableEscapeKeyDown
+                                    maxWidth="xs"
+                                    open={dialogOpen}
+                                >
+                                    <DialogTitle>Are You Sure?</DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText>
+                                            If you delete this, it can't be undone.
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={onCancel} color="primary">
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                        variant="contained"
+                                        onClick={(e) => {
+                                            handleDelete(note)
+                                            setDialogOpen(false)
+                                            e.currentTarget.parentNode.parentNode.parentNode.parentNode.style.display = "none"
+                                        }}
+                                        color="primary"
+                                        >
+                                            Confirm
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </MenuItem>
                         </Menu>
                     </div>               
 
                 }
-                title={note.title}
-                subheader={note.category}
-                
+                title={note.user?.username}
+                subheader= {moment(note.date.toDate()).fromNow()}
                 />
-
                 <CardContent>
-                <Typography variant="body2" >
-                        {note.title}
+                <Typography>
+                        <Button
+                        className={classes.categoryColor}
+                        color="primary" 
+                        size="large"
+                        style={{textTransform:"none"}}>
+                            {note.category}
+                        </Button>
+                    </Typography>
+                    <Typography variant="body1">
+                        <Box fontSize={20}
+                        fontWeight="fontWeightBold"
+                        style={{textTransform: "capitalize"}}>
+                            {note.title}
+                        </Box>
                     </Typography>
                     <br />
-                    <Typography variant="body2" color="textSecondary">
-                        {note.details}
+                    <Typography 
+                    variant="body2" 
+                    >
+                        <Box
+                        fontSize={18}>
+                         {note.details}
+                        </Box>
                     </Typography>
                 </CardContent>
-                <CardMedia
-                    className={classes.media}
-                    input={note.file}
-                />
+                    <img src={note.photoURL} alt="" className={classes.media} />
                 <Divider />
-                <CardActions className={classes.spacing}
-                 >
-                     <IconButton aria-label="comment">
-                <ThumbUpOutlined /> 
-                </IconButton>
-                <IconButton aria-label="comment">
-                 <ThumbDownOutlined />
-                </IconButton>
-                <IconButton aria-label="comment">
-                <Comment />
-                </IconButton>
-            </CardActions>
+                <CardActions className={classes.spacing}>
+                    <IconButton 
+                      onClick={handleExpandClick}
+                      aria-expanded={expanded}
+                      aria-label="show more"
+                    >
+                        <Comment />
+                    </IconButton>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <ShareComments />
+                </Collapse>
             </Card>
+            
         </div>
-    )
+    );
 }
-
-export default NoteCard;

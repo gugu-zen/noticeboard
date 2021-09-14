@@ -1,104 +1,144 @@
 import React, { useState } from 'react';
-import { Typography } from '@material-ui/core';
+import { FormControlLabel, FormLabel, Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { Container } from '@material-ui/core';
+import { Card } from '@material-ui/core';
+import { CardContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { Divider } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
+import { Radio } from '@material-ui/core';
+import { RadioGroup } from '@material-ui/core';
+import { FormControl } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoIcon from '@material-ui/icons/Photo';
-import { AttachFileOutlined } from '@material-ui/icons';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import { AttachFileOutlined, Send } from '@material-ui/icons';
 
 
 const useStyles = makeStyles({
+    root: {
+        maxWidth: 'lg',
+        backgroundColor: "fefefe",
+    },
     field: {
         marginTop: 20,
         marginBottom: 20,
-        display: 'block'
+        display: 'block',
+        color: "#282A3A",
     },
     input: {
         display: 'hidden',
-      },
+    },
+    text: {
+    fontSize: 20
+    },
+    radio: {
+        marginTop: 25,
+    },
+    focused: {
+        '&:focus': {
+            color: "#fff"
+        },
+    },
+    btn: {
+        marginTop: 10,
+        marginLeft:30,
+    }
 })
 
-    function Edit() {
+export default  function Edit() {
     const classes = useStyles()
     const history = useHistory()
     const [title, setTitle] = useState('')
     const [details, setDetails] = useState('')
     const [file, setFile] = useState('')
-    const [titleError, setTitleError] = useState(false)
-    const [detailsError, setDetailsError] = useState(false)
-  
+    const [category, setCategory] = useState('')
+
+   
     const handleSubmit = (e) => {
         e.preventDefault()
-        setTitleError(false)
-        setDetailsError(false)
-
-        if (title === '') {
-            setTitleError(true)
-        }
-        if (details === '') {
-            setDetailsError(true)
-        }
         if (title && details) {
             fetch('http://localhost:8000/notes', {
-                method: "PUT",
+                method: "POST",
                 headers: {"Content-type": "application/json"},
-                body: JSON.stringify({title, details, file})
+                body: JSON.stringify({title, category, details, file})
             }).then(() => history.push('/'))
         }
+        let url = URL.createObjectURL(e.target.files[0]);
+        setFile(url)
+        console.log(url)
+        
 
     }
 
+
+
     return(
-        <Container>
-            <Typography
+        <Container maxWidth="md">
+            <Card className={classes.root}>
+                <CardContent>
+                <Typography
             variant="h5"
             color="textSecondary"
             component="h2"
             gutterBottom
             >
-                Edit Notice.
+                Edit a Notice.
             </Typography>
+            <Divider />
 
+            <FormControl 
+            className={classes.field}
+            >
+                <FormLabel className={classes.text}>Category</FormLabel>
+                <RadioGroup 
+                className={classes.radio}
+                row aria-label="position"
+                value={category} 
+                onChange={(e) => setCategory(e.target.value)}
+                >
+                    <FormControlLabel value="Notices" control={<Radio className={classes.focused} />} label="Notices" />
+                    <FormControlLabel value="Events" control={<Radio />} label="Events" />
+                    <FormControlLabel value="Announcements" control={<Radio  />} label="Announcements" />
+                    <FormControlLabel value="Advertisements" control={<Radio />} label="Advertisements" />
+                </RadioGroup>
+            </FormControl>
+            
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField
                 onChange={(e) => setTitle(e.target.value)}
                 className={classes.field}
-                label="Add title"
-                variant="standard"
+                label="Type a title"
+                variant="filled"
                 color="secondary"
                 fullWidth
-                required
-                error={titleError} 
-                value=""
+                value={title}
                 />
                  <TextField
                  onChange={(e) => setDetails(e.target.value)}
                 className={classes.field}
-                label="Add details"
-                variant="standard"
+                label="Type a text"
+                variant="filled"
                 color="secondary"
                 multiline
                 rows={4}
                 fullWidth
-                required
-                error={detailsError} 
-                value=""
+                value={details}
                 />
                 
                 <div onSubmit={handleSubmit}> 
                     <input
-                        onChange={(e) => setFile(e.target.value)}
-                        accept="document/*"
+                        onSubmit={(e) => setCategory(e.target.files[0])}
+                        name="upload"
+                        accept="attach*/"
                         className={classes.input}
                         id="raised-button-file"
                         multiple
                         type="file"
                         hidden
                     />
+                    
                     <label 
                     htmlFor="raised-button-file"
                     >
@@ -111,13 +151,14 @@ const useStyles = makeStyles({
                         </IconButton>
                     </label>
                     <input 
-                    onChange={(e) => setFile(e.target.value)}
+                    onSubmit={(e) => setFile(e.target.files[0])}
                     accept="image/*" 
                     className={classes.input} 
                     id="icon-button-file" 
                     type="file" 
                     hidden
                     />
+                    
                     <label 
                     htmlFor="icon-button-file"
                     >
@@ -132,18 +173,19 @@ const useStyles = makeStyles({
                 </div>
 
                 <Button 
+                className={classes.btn}
                 type="submit"
                 color="secondary"
                 variant="contained"
-                endIcon={<KeyboardArrowRightIcon />}
+                endIcon={<Send />}
                 >
                     Update
                 </Button>
 
             </form>
 
+                </CardContent>
+            </Card>
         </Container>
     )
 };
-
-export default Edit;

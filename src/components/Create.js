@@ -5,6 +5,7 @@ import { Container } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 import { CardContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { Divider } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import { Radio } from '@material-ui/core';
 import { RadioGroup } from '@material-ui/core';
@@ -13,12 +14,18 @@ import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoIcon from '@material-ui/icons/Photo';
 import { AttachFileOutlined, Send } from '@material-ui/icons';
-
+import socialMediaAuth from '../auth';
+import { googleProvider } from '../authmethod';
+import { addNotice } from '../firestore';
+import SignIn from './SignIn';
 
 const useStyles = makeStyles({
     root: {
         maxWidth: 'lg',
         backgroundColor: "fefefe",
+    },
+    grow: {
+        flexGrow: 1,
     },
     field: {
         marginTop: 20,
@@ -26,21 +33,23 @@ const useStyles = makeStyles({
         display: 'block',
         color: "#282A3A",
     },
-    asterisk: {
-        display: 'none'
-    },
     input: {
         display: 'hidden',
     },
     text: {
     fontSize: 20
     },
-    position: {
-        marginTop: 25
+    radio: {
+        marginTop: 25,
+    },
+    focused: {
+        '&:focus': {
+            color: "#fff"
+        },
     },
     btn: {
         marginTop: 10,
-        marginLeft:30,
+        marginLeft:10,
     }
 })
 
@@ -49,37 +58,44 @@ const useStyles = makeStyles({
     const history = useHistory()
     const [title, setTitle] = useState('')
     const [details, setDetails] = useState('')
+    const [user, setUser] = useState(null)
     const [file, setFile] = useState('')
-    const [titleError, setTitleError] = useState(false)
-    const [detailsError, setDetailsError] = useState(false)
     const [category, setCategory] = useState('')
+    const [loading, setLoading] = useState(false)
 
 
-
-    const handleSubmit = (e) => {
+    socialMediaAuth(googleProvider, false)
+        .then((res) => setUser(res))
+        .catch((err) => setUser(err))
+    
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        setTitleError(false)
-        setDetailsError(false)
-
-        if (title === '') {
-            setTitleError(true)
-        }
-        if (details === '') {
-            setDetailsError(true)
-        }
         if (title && details) {
-            fetch('http://localhost:8000/notes', {
-                method: "POST",
-                headers: {"Content-type": "application/json"},
-                body: JSON.stringify({title, category, details, file})
-            }).then(() => history.push('/recent'))
-        }
+            setLoading(true)
+            const res = await addNotice({
+                title,
+                details,
+                category,
+                date: new Date(),
+                user: {
+                    username: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL
+                },
+                photoURL: ""
+            }, file?.length? file[0] : null)
+            setLoading(false)
+
+            if (!res) {
+                alert("Upload failed")
+            } else history.push('/')
+        }      
 
     }
-
+    
     return(
         <Container maxWidth="md">
-            <Card className={classes.root}>
+            {user?.email ? <Card className={classes.root}>
                 <CardContent>
                 <Typography
             variant="h5"
@@ -89,68 +105,58 @@ const useStyles = makeStyles({
             >
                 Create a New Notice.
             </Typography>
+            <Divider />
 
             <FormControl 
             className={classes.field}
             >
                 <FormLabel className={classes.text}>Category</FormLabel>
                 <RadioGroup 
-                className={classes.position}
+                className={classes.radio}
                 row aria-label="position"
                 value={category} 
                 onChange={(e) => setCategory(e.target.value)}
                 >
-                    <FormControlLabel value="Popular" control={<Radio />} label="Popular"  />
-                    <FormControlLabel value="Notice" control={<Radio />} label="Notice"  />
-                    <FormControlLabel value="Event" control={<Radio />} label="Event"  />
-                    <FormControlLabel value="Advertisement" control={<Radio />} label="Advertisement"  />
+                    <FormControlLabel value="Notices" control={<Radio className={classes.focused} />} label="Notices" />
+                    <FormControlLabel value="Events" control={<Radio />} label="Events" />
+                    <FormControlLabel value="Articles" control={<Radio  />} label="Articles" />
+                    <FormControlLabel value="Advertisements" control={<Radio />} label="Advertisements" />
                 </RadioGroup>
             </FormControl>
-
+            
             <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <TextField
                 onChange={(e) => setTitle(e.target.value)}
                 className={classes.field}
-                label="Add title"
+                placeholder="Type a title"
                 variant="outlined"
                 color="secondary"
                 fullWidth
-                required
-                InputLabelProps={{
-                    FormLabelClasses: {
-                      asterisk: classes.asterisk
-                    }
-                  }}
-                error={titleError} 
                 />
                  <TextField
                  onChange={(e) => setDetails(e.target.value)}
                 className={classes.field}
-                label="Add details"
+                placeholder="Type a text"
                 variant="outlined"
                 color="secondary"
                 multiline
                 rows={4}
                 fullWidth
-                required 
-                InputLabelProps={{
-                    FormLabelClasses: {
-                      asterisk: classes.asterisk
-                    }
-                  }}
-                error={detailsError} 
                 />
                 
-                <div onSubmit={handleSubmit}> 
+                <div > 
                     <input
-                        onChange={(e) => setFile(e.target.value)}
+                        onChange={(e) => {
+                            setFile(e.target.files)
+                        }}
                         name="upload"
-                        accept="application/msword, application/pdf, application/vnd.ms-excel"
+                        accept="attach*/"
                         className={classes.input}
                         id="raised-button-file"
                         multiple
                         type="file"
                         hidden
+                        
                     />
                     
                     <label 
@@ -164,15 +170,17 @@ const useStyles = makeStyles({
                         <AttachFileOutlined />
                         </IconButton>
                     </label>
-                    
                     <input 
-                    onChange={(e) => setFile(e.target.value)}
+                   onChange={(e) => {
+                    setFile(e.target.files)
+                    }}
                     accept="image/*" 
                     className={classes.input} 
                     id="icon-button-file" 
                     type="file" 
                     hidden
                     />
+                   
                     
                     <label 
                     htmlFor="icon-button-file"
@@ -186,7 +194,7 @@ const useStyles = makeStyles({
                         </IconButton>
                     </label>
                 </div>
-
+                <div className={classes.grow} />
                 <Button 
                 className={classes.btn}
                 type="submit"
@@ -200,8 +208,13 @@ const useStyles = makeStyles({
             </form>
 
                 </CardContent>
-            </Card>
+            </Card> : <SignIn/>
+            }
+
+            {loading ? <div>LOADING...</div>:""}
         </Container>
+
+
     )
 };
 
