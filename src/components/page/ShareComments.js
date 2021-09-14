@@ -2,7 +2,7 @@ import React, { useState, useHistory } from 'react';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { IconButton } from '@material-ui/core';
-import {  Send } from '@material-ui/icons';
+import {  AddComment, Send } from '@material-ui/icons';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -30,7 +30,12 @@ export default function ShareComments() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-   
+        if (content ){
+            const res = await AddComment({
+                content,
+                date: new Date()
+            }).history.push('/')
+        }
     }
     
 
@@ -56,7 +61,7 @@ export default function ShareComments() {
             <Card className={classes.root}>
                 <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Thanks
+                    {content}
                     </Typography>
                 
                 </CardContent>
