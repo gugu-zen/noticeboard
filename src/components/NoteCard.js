@@ -77,6 +77,7 @@ export default function NoteCard({note, handleChange, handleDelete}) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [views, setViews] = useState(0);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);

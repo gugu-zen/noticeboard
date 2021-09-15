@@ -1,8 +1,10 @@
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core'
-import Open from '../Open'
+import Page from '../components/Page'
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -72,7 +74,13 @@ export default function Hero() {
             color="secondary" 
             className={classes.btn}
             >
-            <Open />
+                <Router>
+                    <Switch>
+                        <Route exact path="/home">
+                            <Page />
+                        </Route>
+                    </Switch>
+                </Router>
             </Button>
         </div>
     </div>
