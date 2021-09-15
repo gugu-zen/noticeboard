@@ -23,6 +23,7 @@ import Menu from '@material-ui/core/Menu';
 import socialMediaAuth from '../auth';
 import { googleProvider } from '../authmethod';
 import firebase from '../firebaseConfig';
+import Notification from '../components/Notification'
 
 
 const drawerWidth = 240
@@ -259,7 +260,7 @@ const login = () => {
                     <Typography variant="h6" className={classes.logo}>
                         UNIMA Notice Board
                     </Typography>
-                    <div className={classes.search}>
+                   {/*} <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -271,7 +272,7 @@ const login = () => {
                         }}
                         inputProps={{ 'aria-label': 'search' }}
                         />
-                    </div> 
+                    </div> */}
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 2 new notifications" color="inherit">

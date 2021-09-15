@@ -1,12 +1,10 @@
-import React, { useState, useHistory } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { IconButton } from '@material-ui/core';
-import {  AddComment, Send } from '@material-ui/icons';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-
+import { Send } from '@material-ui/icons';
+import Avatar from '@material-ui/core/Avatar';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme) => {
     return {
@@ -23,12 +21,11 @@ const useStyles = makeStyles((theme) => {
     };
 })
 
-export default function ShareComments() {
+export default function ShareComments(note) {
     const classes = useStyles()
-    const history = useHistory()
-    const [content,setContent] = useState('')
+    //const [content,setContent] = useState('')
 
-    const handleSubmit = async (e) => {
+    /*const handleSubmit = async (e) => {
         e.preventDefault()
         if (content ){
             const res = await AddComment({
@@ -37,13 +34,20 @@ export default function ShareComments() {
             }).history.push('/')
         }
     }
+    */
     
 
 
     return(
-        <form onSubmit={handleSubmit}>
-            <TextField
-            onChange={(e) => setContent(e.target.value)}
+        <form onSubmit='{handleSubmit}'>
+            
+            <Avatar className={classes.orange}>N</Avatar><TextField
+            onChange='{(e) => setContent(e.target.value)}'
+            avatar={
+                <div>
+                    {note.user?.photoURL ? <Avatar src={note.user.photoURL}/>: <AccountCircle  />}
+                    </div>
+            }
                 className={classes.comment}
                 autofocus
                 margin="normal"
@@ -58,14 +62,14 @@ export default function ShareComments() {
                 <Send />
             </IconButton>  
 
-            <Card className={classes.root}>
+            {/*<Card className={classes.root}>
                 <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    {content}
+                    {note.content}
                     </Typography>
                 
                 </CardContent>
-            </Card>  
+    </Card>  */}
         </form>
         
         

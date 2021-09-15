@@ -23,6 +23,7 @@
     "react-router-dom": "^5.2.0",
     "react-screenshots": "^0.0.15",
     "react-scripts": "4.0.3",
+    "read-more-react": "^1.0.10",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

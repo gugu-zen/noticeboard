@@ -64,7 +64,7 @@ const useStyles = makeStyles({
     const [file, setFile] = useState('')
     const [category, setCategory] = useState('')
     const [loading, setLoading] = useState(false)
-    const val = "\n";
+
 
 
     socialMediaAuth(googleProvider, false)
@@ -145,8 +145,6 @@ const useStyles = makeStyles({
                 multiline
                 rows={4}
                 fullWidth
-                defaultValue={val} 
-                style={{textTransform: "capitalize"}}
                 />
                 
                 <div > 
