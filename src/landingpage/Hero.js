@@ -1,12 +1,10 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import React from 'react';
+import React  from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core'
-import Page from '../components/Page'
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   container: {
       minHeight: '100vh',
       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${process.env.PUBLIC_URL + './assets/29.jpg'})`,
@@ -51,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
       transition: '350ms all ease-in-out',
       
   },
-})); 
+}); 
 
 export default function Hero() {
 
@@ -74,13 +72,7 @@ export default function Hero() {
             color="secondary" 
             className={classes.btn}
             >
-                <Router>
-                    <Switch>
-                        <Route exact path="/home">
-                            <Page />
-                        </Route>
-                    </Switch>
-                </Router>
+                Open Notice Board
             </Button>
         </div>
     </div>

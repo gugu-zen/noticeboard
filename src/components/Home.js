@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => {
     return {
         root: {
             display: 'flex',
+            backgroundColor: '	#f5f5f5'
           },
           details: {
             display: 'flex',
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => {
           },
           heading: {
               textAlign: 'center',
-              marginLeft: 300
+              marginLeft: 400
           },
           content: {
             flex: '1 0 auto',

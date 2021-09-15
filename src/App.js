@@ -6,6 +6,7 @@ import Create from './components/Create';
 import Layout from './components/Layout';
 import {createTheme, ThemeProvider} from '@material-ui/core';
 
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -24,7 +25,7 @@ const theme = createTheme({
   }
 })
 
-function App() {
+function Page() {
   return (
     
     <ThemeProvider theme={theme}>
@@ -45,4 +46,4 @@ function App() {
   );
 }
 
-export default App;
+export default Page;

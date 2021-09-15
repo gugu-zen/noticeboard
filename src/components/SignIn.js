@@ -76,7 +76,6 @@ const useStyles = makeStyles((theme) => {
                         variant="contained"
                         onClick={(e) => {
                             e.preventDefault()
-                            console.log("Clicked")
                             handleOnClick(googleProvider)}}
                         >
                             Sign in with Google account

@@ -30,7 +30,6 @@ const drawerWidth = 240
 const useStyles = makeStyles((theme) => {
     return {
         page: {
-            //background: "#f9f9f9",
             width: "100%",
             height: "100%",
             padding: theme.spacing(5)
@@ -195,11 +194,11 @@ function Layout({ children }){
         icon: <HomeOutlined className={classes.list} />,
         path: "/"
       },
-      { 
+      /*{ 
           text: "Recently posted",
           icon: <QueryBuilderOutlined className={classes.list} />,
           path: "/recent"
-      },
+      },*/
       {
           text: " Create new notice",
           icon: <AddOutlined className={classes.list}/> ,
@@ -226,6 +225,11 @@ function Layout({ children }){
     firebase.auth().signOut()
     setUser(null)
 }
+const login = () => {
+    firebase.auth().signIn()
+    setUser(null)
+}
+
 
   const renderMenu = (
     <Menu
@@ -252,6 +256,9 @@ function Layout({ children }){
             className={classes.appbar}
             >
                 <Toolbar>
+                    <Typography variant="h6" className={classes.logo}>
+                        UNIMA Notice Board
+                    </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -264,7 +271,7 @@ function Layout({ children }){
                         }}
                         inputProps={{ 'aria-label': 'search' }}
                         />
-                    </div>
+                    </div> 
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 2 new notifications" color="inherit">
@@ -310,7 +317,7 @@ function Layout({ children }){
                 {/** list items */}
                 <List className={classes.list} >
                     <br />
-                   {/*} <div className={classes.search1}>
+                    <div className={classes.search1}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -323,8 +330,7 @@ function Layout({ children }){
                         inputProps={{ 'aria-label': 'search' }}
                         />
                     </div> 
-                    <br /> */}
-
+                    <br /> 
 
                    {menuItems.map(item =>
                     <ListItem

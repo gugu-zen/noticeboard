@@ -18,6 +18,8 @@ import socialMediaAuth from '../auth';
 import { googleProvider } from '../authmethod';
 import { addNotice } from '../firestore';
 import SignIn from './SignIn';
+// import * as mdb from 'mdb-ui-kit'; 
+//import { Input } from 'mdb-ui-kit'; // module
 
 const useStyles = makeStyles({
     root: {
@@ -62,6 +64,7 @@ const useStyles = makeStyles({
     const [file, setFile] = useState('')
     const [category, setCategory] = useState('')
     const [loading, setLoading] = useState(false)
+    const val = "\n";
 
 
     socialMediaAuth(googleProvider, false)
@@ -142,6 +145,8 @@ const useStyles = makeStyles({
                 multiline
                 rows={4}
                 fullWidth
+                defaultValue={val} 
+                style={{textTransform: "capitalize"}}
                 />
                 
                 <div > 
@@ -211,7 +216,16 @@ const useStyles = makeStyles({
             </Card> : <SignIn/>
             }
 
-            {loading ? <div>LOADING...</div>:""}
+            {loading ?
+            <div class="progress">
+            <div
+              class="progress-bar w-75"
+              role="progressbar"
+              aria-valuenow="75"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
+          </div> : ""}
         </Container>
 
 

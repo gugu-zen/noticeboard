@@ -37,9 +37,9 @@ const useStyles = makeStyles( (theme) =>({
     },
     media: {
         maxWidth: '100%',
-        maxHeight: '50%',
+        maxHeight: '60%',
         height: 'auto',
-        width: 'auto'
+        width: '100%'
     },
     menu: {
         marginLeft: 40,
@@ -77,7 +77,7 @@ export default function NoteCard({note, handleChange, handleDelete}) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [views, setViews] = useState(0);
+    
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -198,6 +198,8 @@ export default function NoteCard({note, handleChange, handleDelete}) {
                     <br />
                     <Typography 
                     variant="body2" 
+                    style={{display: 'inline-block'}}
+
                     >
                         <Box
                         fontSize={18}>

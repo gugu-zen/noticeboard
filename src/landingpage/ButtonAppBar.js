@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   loginButton: {
     width: '80px',
     marginRight: theme.spacing(2),
-    backgroundColor: '#cd8500',
+    backgroundColor: '#0540F2',
     '&:hover': {
       backgroundColor: '#F2BE5C',
     },
