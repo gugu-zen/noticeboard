@@ -5,6 +5,9 @@ import { IconButton } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { Card, CardContent } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import { addComment } from '../../firestore'
 
 const useStyles = makeStyles((theme) => {
     return {
@@ -23,55 +26,50 @@ const useStyles = makeStyles((theme) => {
 
 export default function ShareComments(note) {
     const classes = useStyles()
-    //const [content,setContent] = useState('')
+    const [content,setContent] = useState('')
 
-    /*const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         if (content ){
-            const res = await AddComment({
+            const res = await addComment({
                 content,
                 date: new Date()
             }).history.push('/')
         }
     }
-    */
-    
-
 
     return(
-        <form onSubmit='{handleSubmit}'>
-            
-            <Avatar className={classes.orange}>N</Avatar><TextField
-            onChange='{(e) => setContent(e.target.value)}'
-            avatar={
-                <div>
-                    {note.user?.photoURL ? <Avatar src={note.user.photoURL}/>: <AccountCircle  />}
-                    </div>
-            }
-                className={classes.comment}
-                autofocus
-                margin="normal"
-                placeholder="Add comment"
-                variant="standard"
-                color="default"
-                fullWidth
-                action=''
-            />
-            
-            <IconButton className={classes.icon}>
-                <Send />
-            </IconButton>  
-
-            {/*<Card className={classes.root}>
-                <CardContent>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    {note.content}
-                    </Typography>
+        <div>
+            <form onSubmit={handleSubmit}>
                 
-                </CardContent>
-    </Card>  */}
-        </form>
-        
+                <Avatar className={classes.orange}>{note.user?.photoURL ? <Avatar src={note.user.photoURL}/>: <AccountCircle  />}</Avatar><TextField
+                    onChange={(e) => setContent(e.target.value)}
+                    className={classes.comment}
+                    autofocus
+                    margin="normal"
+                    placeholder="Add comment"
+                    variant="standard"
+                    color="default"
+                    fullWidth
+                    action=''
+                />
+                
+                <IconButton className={classes.icon}>
+                    <Send />
+                </IconButton>  
+            </form>
+            <div>
+                <Card className={classes.root}>
+                    <CardContent>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        {content}
+                        </Typography>
+                    
+                    </CardContent>
+                </Card>
+            </div> 
+        </div>      
+       
         
     )
 }

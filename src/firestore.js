@@ -21,6 +21,11 @@ export const addNotice = async (notice, file) => {
 
     return true
 }
+export const addComment = async (comment) => {
+    comment.nid = ""
+    const ref = await noticesRef.add(comment)
+    comment.nid = ref.id
+}
 
 export const deleteNotice = async (notice) => {
     return await noticesRef.doc(`/${notice.nid}`).delete()
