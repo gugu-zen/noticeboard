@@ -18,8 +18,8 @@ import socialMediaAuth from '../auth';
 import { googleProvider } from '../authmethod';
 import { addNotice } from '../firestore';
 import SignIn from './SignIn';
-// import * as mdb from 'mdb-ui-kit'; 
-//import { Input } from 'mdb-ui-kit'; // module
+import * as mdb from 'mdb-ui-kit'; 
+import { Input } from 'mdb-ui-kit'; // module
 
 const useStyles = makeStyles({
     root: {

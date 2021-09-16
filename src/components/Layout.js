@@ -276,7 +276,7 @@ const login = () => {
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 2 new notifications" color="inherit">
-                            <Badge badgeContent={1} color="primary">
+                            <Badge badgeContent={4} color="primary">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>

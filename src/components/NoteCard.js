@@ -10,10 +10,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
+import Snackbar from '@material-ui/core/Snackbar';
 import Collapse from '@material-ui/core/Collapse';
 import { Delete } from '@material-ui/icons';
 import { Divider } from '@material-ui/core';
 import Comment from '@material-ui/icons/Comment';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import { IconButton, Typography } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -77,6 +79,8 @@ export default function NoteCard({note, handleChange, handleDelete}) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
     
 
     const handleExpandClick = () => {
@@ -91,6 +95,15 @@ export default function NoteCard({note, handleChange, handleDelete}) {
     const handleClose = () => {
        open(null);
     };
+
+    const onSnackbarClose = (e, reason) => {
+        if (reason === 'Canceled!') {
+        return;
+        }
+        setSnackbarOpen(false);
+        setSnackbarMessage('');
+        };
+       
 
     const onShowConfirm = () => {
         if (user?.email === note.user?.email)
@@ -168,6 +181,13 @@ export default function NoteCard({note, handleChange, handleDelete}) {
                                         >
                                             Confirm
                                         </Button>
+                                        <Snackbar
+                                        open={snackbarOpen}
+                                        message={snackbarMessage}
+                                        onClose={onSnackbarClose}
+                                        autoHideDuration={4000}
+                                        />
+
                                     </DialogActions>
                                 </Dialog>
                             </MenuItem>
@@ -210,6 +230,9 @@ export default function NoteCard({note, handleChange, handleDelete}) {
                     <img src={note.photoURL} alt="" className={classes.media} />
                 <Divider />
                 <CardActions className={classes.spacing}>
+                    <IconButton>
+                        <VisibilityIcon />
+                    </IconButton>
                     <IconButton 
                       onClick={handleExpandClick}
                       aria-expanded={expanded}

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => {
           },
           heading: {
               textAlign: 'center',
-              marginLeft: 400
+              marginLeft: 300
           },
           content: {
             flex: '1 0 auto',
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => {
     };
 })
 
-export default function Home() {
+export default function Home(note) {
     const classes = useStyles()
     const [category, setCategory] = useState(null)
      
@@ -47,10 +47,10 @@ export default function Home() {
                 <div className={classes.details}>
                     <CardContent className={classes.content}>
                     <Typography component="h5" variant="h5" className={classes.heading}>
-                        Welcome,
+                        Welcome, {note.user?.username}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary" className={classes.heading}>
-                        UNIMA Online Notice Board
+                        Start using the notice board now!
                     </Typography>
                     </CardContent>
                 </div>

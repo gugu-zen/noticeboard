@@ -72,10 +72,10 @@ export default function EditingDialogue(props) {
     };
 
     const onShowConfirm = () => {
-        //if (props.user?.email === note.user?.email)
+        if (props.user?.email === note.user?.email)
             onDialogOpen();
 
-        //else alert("You Can Update your own posts only!")
+        else alert("You Can Update your own posts only!")
     };
 
 
