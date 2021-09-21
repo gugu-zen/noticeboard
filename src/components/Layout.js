@@ -9,13 +9,17 @@ import { List } from '@material-ui/core';
 import { ListItem } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {AddOutlined, HomeOutlined, QueryBuilderOutlined } from '@material-ui/icons';
+import { AddOutlined, HomeOutlined, QueryBuilderOutlined, WhatshotOutlined } from '@material-ui/icons';
+import { BookmarkOutlined, ExploreOutlined } from '@material-ui/icons';
+import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 import { IconButton } from '@material-ui/core';
 import { Badge } from '@material-ui/core';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Settings from '@material-ui/icons/Settings'
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -23,7 +27,6 @@ import Menu from '@material-ui/core/Menu';
 import socialMediaAuth from '../auth';
 import { googleProvider } from '../authmethod';
 import firebase from '../firebaseConfig';
-import Notification from '../components/Notification'
 
 
 const drawerWidth = 240
@@ -195,17 +198,38 @@ function Layout({ children }){
         icon: <HomeOutlined className={classes.list} />,
         path: "/"
       },
-      /*{ 
-          text: "Recently posted",
-          icon: <QueryBuilderOutlined className={classes.list} />,
-          path: "/recent"
-      },*/
-      {
-          text: " Create new notice",
+      { 
+          text: "Explore",
+          icon: <ExploreOutlined className={classes.list} />,
+          path: "/explore"
+      },
+      { 
+        text: "Trending",
+        icon: <WhatshotOutlined className={classes.list} />,
+        path: "/trending"
+    },
+      { 
+        text: "Recent posts",
+        icon: <QueryBuilderOutlined className={classes.list} />,
+        path: "/recent"
+    },
+    {
+          text: " Create post",
           icon: <AddOutlined className={classes.list}/> ,
           path: "/create"
-      }
-    ] 
+    },
+    {
+        text: " Bookmark",
+        icon: <BookmarkOutlined className={classes.list}/> ,
+        path: "/bookmark"
+    },
+    {
+        text: " Help",
+        icon: <HelpOutlineOutlinedIcon className={classes.list}/> ,
+        path: "/help"
+    }
+    ]
+
     
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -243,24 +267,26 @@ const login = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-        <MenuItem onClick={handleMenuClose}>Account setting</MenuItem>
+        <MenuItem onClick={handleMenuClose}><AccountCircle />Profile
+        </MenuItem>
+        <MenuItem onClick={handleMenuClose}><Settings />User Settings</MenuItem>
 
         <Divider />
+
         <br />
+
         <MenuItem onClick={logout}>{user? "Log out":"Log in"}</MenuItem>
         </Menu>
   );
 
     return(
+
         <div className={classes.root}>
             <AppBar
             className={classes.appbar}
             >
                 <Toolbar>
-                    <Typography variant="h6" className={classes.logo}>
-                        UNIMA Notice Board
-                    </Typography>
-                   {/*} <div className={classes.search}>
+                    <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -272,13 +298,16 @@ const login = () => {
                         }}
                         inputProps={{ 'aria-label': 'search' }}
                         />
-                    </div> */}
+                    </div> 
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 2 new notifications" color="inherit">
                             <Badge badgeContent={4} color="primary">
                                 <NotificationsIcon />
                             </Badge>
+                        </IconButton>
+                        <IconButton aria-label="show 2 new notifications" color="inherit">
+                            <Brightness4Icon />
                         </IconButton>
                         <IconButton
                         edge="end"
@@ -318,21 +347,6 @@ const login = () => {
                 {/** list items */}
                 <List className={classes.list} >
                     <br />
-                    <div className={classes.search1}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                        placeholder="Search"
-                        classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput1,
-                        }}
-                        inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </div> 
-                    <br /> 
-
                    {menuItems.map(item =>
                     <ListItem
                             button
@@ -345,8 +359,8 @@ const login = () => {
                   </ListItem>)} 
                         
                 </List>
+
                 <Divider />
-                {/* <div><Footer /></div> */}
 
             </Drawer>
             

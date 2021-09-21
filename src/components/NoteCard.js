@@ -16,6 +16,7 @@ import { Delete } from '@material-ui/icons';
 import { Divider } from '@material-ui/core';
 import Comment from '@material-ui/icons/Comment';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import { IconButton, Typography } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -109,7 +110,7 @@ export default function NoteCard({note, handleChange, handleDelete}) {
         if (user?.email === note.user?.email)
             setDialogOpen(true);
 
-        else alert("You Can Delete your own posts only!")
+       else alert("You an Delete your own posts only!")
     };
     const onCancel = () => {
         setDialogOpen();
@@ -239,6 +240,9 @@ export default function NoteCard({note, handleChange, handleDelete}) {
                       aria-label="show more"
                     >
                         <Comment />
+                    </IconButton>
+                    <IconButton>
+                        <BookmarkBorderOutlinedIcon/>
                     </IconButton>
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>

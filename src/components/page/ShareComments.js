@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import { Card, CardContent, CardHeader } from '@material-ui/core';
+import { Avatar } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import { IconButton } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
-import Avatar from '@material-ui/core/Avatar';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { Card, CardContent } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
 import { addComment } from '../../firestore'
+import socialMediaAuth from '../../auth';
+import { googleProvider } from '../../authmethod';
 
 const useStyles = makeStyles((theme) => {
     return {
@@ -28,6 +31,13 @@ export default function ShareComments(note) {
     const classes = useStyles()
     const [content,setContent] = useState('')
 
+    const [user, setUser] = useState(null)
+    console.warn(user)
+
+    socialMediaAuth(googleProvider, false)
+        .then((res) => setUser(res))
+        .catch((err) => setUser(err))
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (content ){
@@ -42,7 +52,7 @@ export default function ShareComments(note) {
         <div>
             <form onSubmit={handleSubmit}>
                 
-                <Avatar className={classes.orange}>{note.user?.photoURL ? <Avatar src={note.user.photoURL}/>: <AccountCircle  />}</Avatar><TextField
+               <TextField
                     onChange={(e) => setContent(e.target.value)}
                     className={classes.comment}
                     autofocus
@@ -52,22 +62,33 @@ export default function ShareComments(note) {
                     color="default"
                     fullWidth
                     action=''
+                    InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle />
+                          </InputAdornment>
+                        ),
+                      }}
                 />
                 
                 <IconButton className={classes.icon}>
                     <Send />
                 </IconButton>  
-            </form>
+            </form> 
+
             <div>
                 <Card className={classes.root}>
+                <CardHeader/>
                     <CardContent>
-                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                        <Typography className={classes.title} variant="body2" 
+                    style={{display: 'inline-block'}}
+                     gutterBottom>
                         {content}
                         </Typography>
-                    
                     </CardContent>
                 </Card>
-            </div> 
+            </div>
+
         </div>      
        
         

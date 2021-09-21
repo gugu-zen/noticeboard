@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => {
     };
 })
 
-export default function Recent() {
+export default function Trending() {
     const classes = useStyles()
 
     return(
@@ -24,10 +24,13 @@ export default function Recent() {
             color="textSecondary"
             component="h2"
             gutterBottom>
-                Recent
+                Trending
                 </Typography>
                     <Divider />
             <br className={classes.spacing}/>
+            <Typography>
+                Trending topics
+            </Typography>
         
 
         </div>  

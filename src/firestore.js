@@ -25,6 +25,7 @@ export const addComment = async (comment) => {
     comment.nid = ""
     const ref = await noticesRef.add(comment)
     comment.nid = ref.id
+    await updateComment(comment)
 }
 
 export const deleteNotice = async (notice) => {
@@ -39,6 +40,14 @@ export const updateNotice = async (notice) => {
         nid: notice.nid,
         date: notice.date,
         photoURL: notice.photoURL,
+        
+    })
+}
+
+export const updateComment = async (comment) => {
+    return await noticesRef.doc(`/${comment.nid}`).update({
+        content: comment.content,
+        nid: comment.nid,
         
     })
 }

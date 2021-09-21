@@ -18,8 +18,7 @@ import socialMediaAuth from '../auth';
 import { googleProvider } from '../authmethod';
 import { addNotice } from '../firestore';
 import SignIn from './SignIn';
-import * as mdb from 'mdb-ui-kit'; 
-import { Input } from 'mdb-ui-kit'; // module
+
 
 const useStyles = makeStyles({
     root: {
@@ -87,7 +86,17 @@ const useStyles = makeStyles({
                 },
                 photoURL: ""
             }, file?.length? file[0] : null)
-            setLoading(false)
+            const options = {
+                onUploadProgress: (progressEvent) => {
+                  const {loaded, total} = progressEvent;
+                  let percent = Math.floor( (loaded * 100) / total )
+                  console.log( `${loaded}kb of ${total}kb | ${percent}%` );
+          
+                  if( percent < 100 ){
+                    setLoading({ uploadPercentage: percent })
+                  }
+                }
+              }
 
             if (!res) {
                 alert("Upload failed")
@@ -223,6 +232,7 @@ const useStyles = makeStyles({
               aria-valuemin="0"
               aria-valuemax="100"
             ></div>
+            {loading}
           </div> : ""}
         </Container>
 

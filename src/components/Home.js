@@ -14,16 +14,27 @@ const useStyles = makeStyles((theme) => {
     return {
         root: {
             display: 'flex',
-            backgroundColor: '	#f5f5f5'
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${process.env.PUBLIC_URL + './assets/29.jpg'})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover'
           },
           details: {
             display: 'flex',
             flexDirection: 'column',
+            margin: 30
           },
           heading: {
               textAlign: 'center',
-              marginLeft: 300
+              marginLeft: 150,
+              color: "#fff"
           },
+          heading2: {
+            textAlign: 'center',
+            fontSize: 20,
+            marginLeft: 150,
+            marginTop: 10,
+            color: "#fff"
+        },
           content: {
             flex: '1 0 auto',
           },
@@ -46,11 +57,11 @@ export default function Home(note) {
             <Card className={classes.root}>
                 <div className={classes.details}>
                     <CardContent className={classes.content}>
-                    <Typography component="h5" variant="h5" className={classes.heading}>
+                    <Typography component="h4" variant="h4" className={classes.heading}>
                         Welcome, {note.user?.username}
                     </Typography>
-                    <Typography variant="subtitle1" color="textSecondary" className={classes.heading}>
-                        Start using the notice board now!
+                    <Typography variant="subtitle1" color="textSecondary" className={classes.heading2}>
+                        Try University of Malawi Notice Board and enrich your college life!
                     </Typography>
                     </CardContent>
                 </div>
